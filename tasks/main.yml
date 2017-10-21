@@ -6,13 +6,13 @@
         to your desired domain name
     when: base_domain == ""
 
-  - include: deps.yml
-  - include: users.yml
-  - include: storage.yml
-  - include: config/hostname.yml
-  - include: config/certificates.yml
-  - include: config/postfix.yml
-  - include: config/dovecot.yml
-  - include: config/filters.yml
-  - include: config/dkim.yml
-  - include: config/services.yml
+  - include_tasks: deps.yml
+  - include_tasks: users.yml
+  - include_tasks: storage.yml
+  - include_tasks: config/hostname.yml
+  - include_tasks: config/certificates.yml
+  - include_tasks: config/postfix.yml
+  - include_tasks: config/dovecot.yml
+  - include_tasks: config/filters.yml
+  - include_tasks: config/dkim.yml
+  - include_tasks: config/services.yml
