@@ -1,0 +1,29 @@
+---
+
+mail_host: 'mail.{{base_domain}}'
+mail_ldap_host: '127.0.0.1'
+mail_dir_cert: '/etc/letsencrypt/live/{{mail_host}}'
+mail_dir_postfix_config: /etc/postfix
+mail_dir_sasl_config: /etc
+mail_dir_storage: /srv/mail
+mail_dovecot_debug: 'no'
+mail_dovecot_debug_ldap: 0
+mail_sasl_debug: 0
+mail_sasl_dir_config: /etc
+mail_dovecot_dir: /etc/dovecot
+mail_dovecot_dir_config: /etc/dovecot/conf.practical.d
+mail_opendkim_dir_config: /etc/opendkim
+mail_gid: 5000
+mail_group: vmail
+mail_uid: 5000
+mail_user: vmail
+mail_admin_address: 'postmaster@{{base_domain}}'
+mail_ldap_user: 'mail'
+
+ldap_dn_services: 'ou=services,dc=ldap'
+fail2ban_senderemail: '{{mail_admin_address}}'
+
+mail_ldap_bind_dn: 'uid={{mail_ldap_user}},{{ldap_dn_services}}'
+
+letsencrypt_port_challenge_http: 80
+letsencrypt_port_challenge_https: 443

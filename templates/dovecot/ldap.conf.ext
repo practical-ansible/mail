@@ -1,0 +1,14 @@
+hosts = {{mail_ldap_host}}
+dn = {{mail_ldap_bind_dn}}
+dnpass = {{mail_password}}
+
+debug_level = {{mail_dovecot_debug_ldap}}
+ldap_version = 3
+
+base = ou=users,dc=%d,dc=ldap
+scope = onelevel
+
+user_filter = (&(objectClass=inetOrgPerson)(uid=%n))
+pass_attrs = userPassword=password
+pass_filter = (&(objectClass=inetOrgPerson)(uid=%n))
+default_pass_scheme = SHA

@@ -1,0 +1,18 @@
+---
+
+  - fail:
+      msg: >
+        Mail domain must be defined set env variable PRACTICAL_MAIL_DOMAIN
+        to your desired domain name
+    when: base_domain == ""
+
+  - include: deps.yml
+  - include: users.yml
+  - include: storage.yml
+  - include: config/hostname.yml
+  - include: config/certificates.yml
+  - include: config/postfix.yml
+  - include: config/dovecot.yml
+  - include: config/filters.yml
+  - include: config/dkim.yml
+  - include: config/services.yml

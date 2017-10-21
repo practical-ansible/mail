@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: kamaln7.swapfile, swapfile_use_dd: True, swapfile_size: 2048, swapfile_swappiness: 10 }
+  - { role: ldap, use_mail: true }

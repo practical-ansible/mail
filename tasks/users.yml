@@ -1,0 +1,53 @@
+---
+
+- name: Generate mail service password
+  set_fact:
+    mail_password: "{{ lookup('passwordstore', '{{base_domain}}/{{mail_ldap_user}} create=True') }}"
+
+- name: Create LDAP mail user
+  ldap_entry:
+    state: present
+    dn: 'uid={{mail_ldap_user}},{{ldap_dn_services}}'
+    objectClass:
+      - simpleSecurityObject
+      - account
+      - top
+    params:
+      uid: '{{mail_ldap_user}}'
+      userPassword: '{{mail_password}}'
+
+- name: Ensure mail group existence
+  group:
+    state: present
+    gid: '{{mail_gid}}'
+    name: '{{mail_group}}'
+
+- name: Ensure mail user existence
+  user:
+    state: present
+    name: '{{mail_group}}'
+    uid: '{{mail_gid}}'
+    home: '{{mail_dir_storage}}'
+    group: '{{mail_group}}'
+
+
+- name: Add system service users to required groups
+  user:
+    name: '{{user.name}}'
+    append: yes
+    groups: '{{user.groups}}'
+  loop_control:
+    loop_var: user
+  with_items:
+    - name: postfix
+      groups:
+        - postfix
+        - sasl
+    - name: amavis
+      groups:
+        - amavis
+        - clamav
+    - name: clamav
+      groups:
+        - amavis
+        - clamav

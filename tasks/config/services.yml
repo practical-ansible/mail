@@ -1,0 +1,13 @@
+---
+- name: Configure system services
+  systemd:
+    name: '{{item}}'
+    state: started
+    enabled: yes
+    masked: no
+  with_items:
+    - postfix
+    - opendkim
+    - amavis
+    - clamav-daemon
+    - dovecot

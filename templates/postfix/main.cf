@@ -1,0 +1,112 @@
+### Base Settings
+
+append_dot_mydomain = no
+compatibility_level = 2
+inet_interfaces = all
+inet_protocols = all
+mail_owner = {{mail_user}}
+myhostname = {{mail_host}}
+mynetworks = 127.0.0.0/8, 10.0.0.0/24
+smtpd_banner = $myhostname ESMTP $mail_name
+enable_original_recipient = no
+
+### Local Transport
+# Disable local transport (so that system accounts can't receive mail)
+
+local_transport = error:Local Transport Disabled
+mydestination = localhost
+alias_maps = hash:/etc/aliases
+
+### Virtual Transport
+
+virtual_alias_maps = ldap:{{mail_dir_postfix_config}}/ldap_virtual_aliases.cf
+virtual_mailbox_base = {{mail_dir_storage}}
+virtual_mailbox_domains = ldap:{{mail_dir_postfix_config}}/ldap_virtual_domains.cf
+virtual_mailbox_maps = ldap:{{mail_dir_postfix_config}}/ldap_virtual_recipients.cf
+virtual_transport = lmtp:unix:private/dovecot-lmtp
+
+### ESMTP Settings
+### SASL
+
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_security_options = noanonymous, noplaintext
+smtpd_sasl_tls_security_options = noanonymous
+smtpd_tls_auth_only = yes
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+broken_sasl_auth_clients = yes
+soft_bounce = no
+
+### TLS
+
+smtpd_client_new_tls_session_rate_limit = 10
+smtpd_enforce_tls = no
+smtpd_tls_ask_ccert = yes
+smtpd_tls_auth_only = yes
+smtpd_tls_cert_file = {{mail_dir_cert}}/fullchain.pem
+smtpd_tls_exclude_ciphers = EXP EDH-RSA-DES-CBC-SHA ADH-DES-CBC-SHA DES-CBC-SHA SEED-SHA
+smtpd_tls_key_file = {{mail_dir_cert}}/privkey.pem
+smtpd_tls_loglevel = {{mail_sasl_debug}}
+smtpd_tls_received_header = yes
+smtpd_tls_security_level = may
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtpd_tls_session_cache_timeout = 3600s
+smtpd_use_tls = yes
+
+smtpd_helo_required = yes
+smtpd_delay_reject = yes
+
+tls_random_source = dev:/dev/urandom
+
+### Connection Policies
+
+# Reject Early Talkers
+postscreen_greet_action = enforce
+
+### Session Policies
+
+smtpd_relay_restrictions =
+  permit_mynetworks,
+  permit_sasl_authenticated,
+  reject_unauth_destination
+
+smtpd_recipient_restrictions =
+  permit_mynetworks,
+  permit_sasl_authenticated,
+  reject_unknown_reverse_client_hostname,
+  reject_invalid_helo_hostname,
+  reject_non_fqdn_helo_hostname,
+  reject_non_fqdn_sender,
+  reject_non_fqdn_recipient,
+  reject_unknown_sender_domain,
+  reject_unknown_recipient_domain,
+  reject_invalid_hostname,
+  reject_rbl_client zen.spamhaus.org,
+  reject_rhsbl_reverse_client dbl.spamhaus.org,
+  reject_rhsbl_helo dbl.spamhaus.org,
+  reject_rhsbl_sender dbl.spamhaus.org,
+  permit
+
+smtpd_data_restrictions =
+  reject_multi_recipient_bounce,
+  reject_unauth_pipelining
+
+smtpd_sender_restrictions =
+  permit_sasl_authenticated,
+  reject_unknown_sender_domain
+
+smtpd_helo_restrictions =
+  permit_mynetworks,
+  reject_invalid_hostname
+
+disable_vrfy_command = yes
+
+
+### Amavis
+content_filter = smtp-amavis:[127.0.0.1]:10024
+
+### OpenDKIM
+milter_default_action = accept
+milter_protocol = 6
+smtpd_milters = inet:127.0.0.1:12301
+non_smtpd_milters = inet:127.0.0.1:12301

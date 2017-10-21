@@ -1,0 +1,4 @@
+---
+- name: 'Set hostname to {{mail_host}}'
+  hostname:
+    name: '{{mail_host}}'

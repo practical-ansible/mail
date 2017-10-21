@@ -1,0 +1,12 @@
+---
+- name: Ensure certificate directory existence
+  file:
+    path: '{{mail_dir_cert}}'
+    state: directory
+    owner: '{{mail_user}}'
+    group: '{{mail_group}}'
+    mode: 0700
+    recurse: yes
+
+- name: Configure certificates
+  shell: letsencrypt certonly -n --standalone -m {{mail_admin_address}} --agree-tos -d {{ mail_host }} --tls-sni-01-port {{letsencrypt_port_challenge_https}} --http-01-port {{letsencrypt_port_challenge_http}}

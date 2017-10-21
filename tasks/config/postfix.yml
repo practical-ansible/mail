@@ -1,0 +1,18 @@
+---
+- name: Configure postfix
+  template:
+    src: '{{item.src}}'
+    dest: '{{item.dest}}'
+  with_items:
+    - src: postfix/ldap_virtual_aliases.cf
+      dest: '{{mail_dir_postfix_config}}/ldap_virtual_aliases.cf'
+    - src: postfix/ldap_virtual_domains.cf
+      dest: '{{mail_dir_postfix_config}}/ldap_virtual_domains.cf'
+    - src: postfix/ldap_virtual_recipients.cf
+      dest: '{{mail_dir_postfix_config}}/ldap_virtual_recipients.cf'
+    - src: postfix/main.cf
+      dest: '{{mail_dir_postfix_config}}/main.cf'
+    - src: postfix/master.cf
+      dest: '{{mail_dir_postfix_config}}/master.cf'
+  notify:
+    - restart postfix

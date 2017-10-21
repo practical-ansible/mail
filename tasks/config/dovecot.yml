@@ -1,0 +1,25 @@
+---
+- name: Create dovecot configuration directory
+  file:
+    path: '{{mail_dovecot_dir_config}}'
+    state: directory
+
+- name: Configure dovecot
+  template:
+    src: '{{item.src}}'
+    dest: '{{item.dest}}'
+  with_items:
+    - src: dovecot/dovecot.conf
+      dest: '{{mail_dovecot_dir}}/dovecot.conf'
+    - src: dovecot/ldap.conf.ext
+      dest: '{{mail_dovecot_dir_config}}/ldap.conf.ext'
+    - src: dovecot/05-auth.conf
+      dest: '{{mail_dovecot_dir_config}}/05-auth.conf'
+    - src: dovecot/10-master.conf
+      dest: '{{mail_dovecot_dir_config}}/10-master.conf'
+    - src: dovecot/15-mail.conf
+      dest: '{{mail_dovecot_dir_config}}/15-mail.conf'
+    - src: dovecot/20-logging.conf
+      dest: '{{mail_dovecot_dir_config}}/20-logging.conf'
+  notify:
+    - restart dovecot

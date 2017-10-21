@@ -1,0 +1,3 @@
+{% for organization in organizations %}
+mail._domainkey.{{organization}} {{organization}}:mail:/etc/opendkim/keys/{{organization}}/mail.private
+{% endfor %}
