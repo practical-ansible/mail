@@ -17,7 +17,7 @@ galaxy_info:
     - mailserver
 
 dependencies:
-  - role: just-paja.practical-ansible-certbot
+  - role: practical-ansible.certbot
   - role: kamaln7.swapfile
     swapfile_use_dd: True
     swapfile_size: 2048
