@@ -1,4 +1,19 @@
 ---
 dependencies:
   - { role: kamaln7.swapfile, swapfile_use_dd: True, swapfile_size: 2048, swapfile_swappiness: 10 }
-  - { role: ldap, use_mail: true }
+galaxy_info:
+  author: Pavel Žák
+  description: Postfix, Dovecot with Lets Encrypt as a mail server
+  license: MIT
+  min_ansible_version: 2.4
+  platforms:
+   - name: Ubuntu
+     versions:
+     - all
+
+  galaxy_tags:
+    - postfix
+    - dovecot
+    - letsencrypt
+    - mail
+    - mailserver
