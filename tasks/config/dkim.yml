@@ -32,7 +32,7 @@
     - restart postfix
 
 - name: Generate opendkim keys
-  include: ./dkim-key.yml
+  include_tasks: ./dkim-key.yml
   with_items: '{{organizations}}'
   loop_control:
     loop_var: organization
