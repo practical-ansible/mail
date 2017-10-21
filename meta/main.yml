@@ -1,6 +1,4 @@
 ---
-dependencies:
-  - { role: kamaln7.swapfile, swapfile_use_dd: True, swapfile_size: 2048, swapfile_swappiness: 10 }
 galaxy_info:
   author: Pavel Žák
   description: Postfix, Dovecot with Lets Encrypt as a mail server
@@ -17,3 +15,10 @@ galaxy_info:
     - letsencrypt
     - mail
     - mailserver
+
+dependencies:
+  - role: just-paja.practical-ansible-certbot
+  - role: kamaln7.swapfile
+    swapfile_use_dd: True
+    swapfile_size: 2048
+    swapfile_swappiness: 10
