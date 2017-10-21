@@ -42,9 +42,3 @@
     - dovecot-pop3d
     - dovecot-lmtpd
     - dovecot-ldap
-
-- name: Install letsencrypt
-  action: apt pkg={{item}} state=present
-  with_items:
-    - letsencrypt
-    - python-letsencrypt
