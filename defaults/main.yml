@@ -19,6 +19,7 @@ mail_uid: 5000
 mail_user: vmail
 mail_admin_address: 'postmaster@{{base_domain}}'
 mail_ldap_user: 'mail'
+mail_postfix_allowed_networks: 127.0.0.0/8
 
 ldap_dn_services: 'ou=services,dc=ldap'
 fail2ban_senderemail: '{{mail_admin_address}}'

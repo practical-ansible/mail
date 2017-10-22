@@ -6,7 +6,7 @@ inet_interfaces = all
 inet_protocols = all
 mail_owner = {{mail_user}}
 myhostname = {{mail_host}}
-mynetworks = 127.0.0.0/8, 10.0.0.0/24
+mynetworks = {{mail_postfix_allowed_networks}}
 smtpd_banner = $myhostname ESMTP $mail_name
 enable_original_recipient = no
 
