@@ -1,44 +1,53 @@
 ---
 - name: Install postfix
-  action: apt pkg={{item}} state=present
-  with_items:
-    - postfix
-    - postfix-pcre
-    - postfix-ldap
-    - mutt
-    - swaks
-    - opendkim
-    - opendkim-tools
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - postfix
+      - postfix-pcre
+      - postfix-ldap
+      - mutt
+      - swaks
+      - opendkim
+      - opendkim-tools
 
 - name: Install spam filter
-  action: apt pkg={{item}} state=present
-  with_items:
-    - amavisd-new
-    - arj
-    - bzip2
-    - cabextract
-    - clamav-daemon
-    - cpio
-    - file
-    - gzip
-    - libmail-spf-perl
-    - libnet-dns-perl
-    - nomarch
-    - pax
-    - pyzor
-    - rar
-    - razor
-    - spamassassin
-    - unrar
-    - unzip
-    - zip
-    - zoo
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - amavisd-new
+      - arj
+      - bzip2
+      - cabextract
+      - clamav-daemon
+      - cpio
+      - file
+      - gzip
+      - libmail-spf-perl
+      - libnet-dns-perl
+      - nomarch
+      - pax
+      - pyzor
+      - rar
+      - razor
+      - spamassassin
+      - unrar
+      - unzip
+      - zip
+      - zoo
 
 - name: Install dovecot
-  action: apt pkg={{item}} state=present
-  with_items:
-    - dovecot-core
-    - dovecot-imapd
-    - dovecot-pop3d
-    - dovecot-lmtpd
-    - dovecot-ldap
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - dovecot-core
+      - dovecot-imapd
+      - dovecot-pop3d
+      - dovecot-lmtpd
+      - dovecot-ldap
