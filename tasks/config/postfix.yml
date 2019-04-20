@@ -6,6 +6,8 @@
   with_items:
     - src: postfix/ldap_virtual_aliases.cf
       dest: '{{mail_dir_postfix_config}}/ldap_virtual_aliases.cf'
+    - src: postfix/ldap_virtual_groups.cf
+      dest: '{{mail_dir_postfix_config}}/ldap_virtual_groups.cf'
     - src: postfix/ldap_virtual_domains.cf
       dest: '{{mail_dir_postfix_config}}/ldap_virtual_domains.cf'
     - src: postfix/ldap_virtual_recipients.cf

@@ -19,7 +19,9 @@ alias_maps = hash:/etc/aliases
 
 ### Virtual Transport
 
-virtual_alias_maps = ldap:{{mail_dir_postfix_config}}/ldap_virtual_aliases.cf
+virtual_alias_maps =
+  ldap:{{mail_dir_postfix_config}}/ldap_virtual_groups.cf,
+  ldap:{{mail_dir_postfix_config}}/ldap_virtual_aliases.cf
 virtual_mailbox_base = {{mail_dir_storage}}
 virtual_mailbox_domains = ldap:{{mail_dir_postfix_config}}/ldap_virtual_domains.cf
 virtual_mailbox_maps = ldap:{{mail_dir_postfix_config}}/ldap_virtual_recipients.cf

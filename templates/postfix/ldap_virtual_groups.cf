@@ -2,7 +2,7 @@ bind = yes
 bind_dn = {{mail_ldap_bind_dn}}
 bind_pw = {{mail_password}}
 server_host = {{mail_ldap_host}}
-search_base = ou=users,dc=%d,dc=ldap
+search_base = dc=ldap
 scope = sub
-query_filter = (&(uid=%u)(objectClass=account))
-result_attribute = l
+query_filter = memberof=cn=%u,ou=groups,dc=%d,dc=ldap
+result_attribute = mail, l
