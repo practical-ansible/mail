@@ -1,0 +1,44 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+
+workspace_root: &workspace_root
+  ~/repo
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/python:3.7
+
+version: 2
+jobs:
+  install-and-test:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "requirements.txt" }}
+
+      - run:
+          name: Install dependencies
+          command: |
+            python3 -m venv .venv
+            . .venv/bin/activate
+            pip install -r requirements.txt
+
+      - run:
+          name: Lint
+          command: ./.venv/bin/vrun ansible-lint **/*.yml
+
+      - save_cache:
+          paths:
+            - ./.venv
+          key: dependencies-{{ checksum "requirements.txt" }}
+
+workflows:
+  version: 2
+  build-n-deploy:
+    jobs:
+      - install-and-test
