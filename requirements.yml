@@ -1,6 +1,6 @@
 ---
 
 - src: practical-ansible.certbot
-  version: '1.0.1'
+  version: '1.0.2'
 - src: kamaln7.swapfile
   version: '0.4'
