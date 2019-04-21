@@ -1,5 +1,9 @@
 # Practical Ansible Mail
 
+[![CircleCI](https://img.shields.io/circleci/project/github/practical-ansible/mail.svg)](https://circleci.com/gh/practical-ansible/mail)
+[![Quality](https://img.shields.io/ansible/quality/21426.svg)](https://galaxy.ansible.com/practical-ansible/mail)
+[![Downloads](https://img.shields.io/ansible/role/d/21426.svg)](https://galaxy.ansible.com/practical-ansible/mail)
+
 Installs Postfix and Dovecot and configures them to act together as IMAP/SMTP mail server with virtual database of mailboxes and domains provided by OpenLDAP. Uses Lets Encrypt to generate certificates for communication.
 
 You need to define `{{base_domain}}` to keep your passwords stored in password storage. Hostname of your mail server will be configured as `mail.{{base_domain}}` unless you override variable `{{mail_host}}`.
