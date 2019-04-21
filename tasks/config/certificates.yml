@@ -1,19 +1,28 @@
 ---
 - name: Ensure certificate directory existence
   file:
-    path: '{{mail_dir_cert}}'
+    path: '{{ mail_dir_cert }}'
     state: directory
-    owner: '{{mail_user}}'
-    group: '{{mail_group}}'
+    owner: '{{ mail_user }}'
+    group: '{{ mail_group }}'
     mode: 0700
     recurse: yes
 
 - name: Ensure certificate existence
   register: ssl_certificate_file
   stat:
-    path: '{{mail_dir_cert}}/privkey.pem'
+    path: '{{ mail_dir_cert }}/privkey.pem'
 
 - name: Configure certificates
-  shell: certbot certonly -n --standalone -m {{mail_admin_address}} --agree-tos -d {{ mail_host }} --tls-sni-01-port {{certbot_port_challenge_https}} --http-01-port {{certbot_port_challenge_http}}
-  when: ssl_certificate_file.stat.exists == False
+  shell: >
+    certbot
+      certonly
+        -n
+        --standalone
+        -m {{ mail_admin_address }}
+        --agree-tos
+        -d {{ mail_host }}
+        --tls-sni-01-port {{ certbot_port_challenge_https }}
+        --http-01-port {{ certbot_port_challenge_http }}
+  when: not ssl_certificate_file.stat.exists
   changed_when: '"Keeping" not in certbot_result.stdout'

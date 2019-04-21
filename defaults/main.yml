@@ -1,8 +1,8 @@
 ---
 
-mail_host: 'mail.{{base_domain}}'
+mail_host: 'mail.{{ base_domain }}'
 mail_ldap_host: '127.0.0.1'
-mail_dir_cert: '/etc/letsencrypt/live/{{mail_host}}'
+mail_dir_cert: '/etc/letsencrypt/live/{{ mail_host }}'
 mail_dir_postfix_config: /etc/postfix
 mail_dir_sasl_config: /etc
 mail_dir_storage: /srv/mail
@@ -17,14 +17,14 @@ mail_gid: 5000
 mail_group: vmail
 mail_uid: 5000
 mail_user: vmail
-mail_admin_address: 'postmaster@{{base_domain}}'
+mail_admin_address: 'postmaster@{{ base_domain }}'
 mail_ldap_user: 'mail'
 mail_postfix_allowed_networks: 127.0.0.0/8
 
 ldap_dn_services: 'ou=services,dc=ldap'
-fail2ban_senderemail: '{{mail_admin_address}}'
+fail2ban_senderemail: '{{ mail_admin_address }}'
 
-mail_ldap_bind_dn: 'uid={{mail_ldap_user}},{{ldap_dn_services}}'
+mail_ldap_bind_dn: 'uid={{ mail_ldap_user }},{{ ldap_dn_services }}'
 
 certbot_port_challenge_http: 80
 certbot_port_challenge_https: 443

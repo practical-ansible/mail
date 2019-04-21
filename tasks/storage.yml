@@ -2,14 +2,14 @@
 
 - name: Create mail storage
   file:
-      path: '{{item}}'
+      path: '{{ item }}'
       state: directory
-      owner: '{{mail_user}}'
-      group: '{{mail_group}}'
+      owner: '{{ mail_user }}'
+      group: '{{ mail_group }}'
       mode: 0770
       recurse: yes
   with_items:
-    - '{{mail_dir_storage}}'
+    - '{{ mail_dir_storage }}'
     - /var/spool/postfix
     - /var/lib/postfix
   notify: restart postfix

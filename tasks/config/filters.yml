@@ -1,8 +1,8 @@
 ---
 - name: Configure clamav
   template:
-    src: '{{item.src}}'
-    dest: '{{item.dest}}'
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
   with_items:
     - src: clamav/clamd.conf
       dest: '/etc/clamav/clamd.conf'
@@ -11,8 +11,8 @@
 
 - name: Configure amavis
   template:
-    src: '{{item.src}}'
-    dest: '{{item.dest}}'
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
   with_items:
     - src: amavis/15-content_filter_mode
       dest: '/etc/amavis/conf.d/15-content_filter_mode'

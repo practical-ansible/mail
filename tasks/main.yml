@@ -1,10 +1,11 @@
 ---
 
-  - fail:
+  - name: Verify base domain is set
+    fail:
       msg: >
         Mail domain must be defined set env variable PRACTICAL_MAIL_DOMAIN
         to your desired domain name
-    when: base_domain == ""
+    when: not base_domain
 
   - include_tasks: deps.yml
   - include_tasks: users.yml

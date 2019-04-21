@@ -1,17 +1,17 @@
 ---
 - name: 'Find organization key'
   stat:
-    path: '{{mail_opendkim_dir_config}}/keys/{{organization}}/mail.private'
+    path: '{{ mail_opendkim_dir_config }}/keys/{{ organization }}/mail.private'
   register: certfile
 
-- name: 'Generate opendkim key for {{organization}}'
-  shell: 'opendkim-genkey -s mail -d {{organization}} -D {{mail_opendkim_dir_config}}/keys/{{organization}}'
-  when: certfile.stat.exists == False
+- name: 'Generate opendkim key for {{ organization }}'
+  shell: 'opendkim-genkey -s mail -d {{ organization }} -D {{ mail_opendkim_dir_config }}/keys/{{ organization }}'
+  when: not certfile.stat.exists
   notify:
     - restart opendkim
 
-- name: 'Save opendkim key for {{organization}}'
+- name: 'Save opendkim key for {{ organization }}'
   fetch:
-    src: '{{mail_opendkim_dir_config}}/keys/{{organization}}/mail.txt'
-    dest: 'remote/{{organization}}/dkim.txt'
+    src: '{{ mail_opendkim_dir_config }}/keys/{{ organization }}/mail.txt'
+    dest: 'remote/{{ organization }}/dkim.txt'
     flat: true

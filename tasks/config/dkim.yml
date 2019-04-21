@@ -1,38 +1,38 @@
 ---
 - name: Create opendkim configuration directory
   file:
-    path: '{{item}}'
+    path: '{{ item }}'
     state: directory
   with_items:
-    - '{{mail_opendkim_dir_config}}'
+    - '{{ mail_opendkim_dir_config }}'
 
 - name: Create opendkim keys directories
   file:
-    path: '{{mail_opendkim_dir_config}}/keys/{{item}}'
+    path: '{{ mail_opendkim_dir_config }}/keys/{{ item }}'
     state: directory
-  with_items: '{{organizations}}'
+  with_items: '{{ organizations }}'
 
 - name: Configure opendkim
   template:
-    src: '{{item.src}}'
-    dest: '{{item.dest}}'
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
   with_items:
     - src: opendkim/opendkim.conf
       dest: '/etc/opendkim.conf'
     - src: opendkim/opendkim.default
       dest: '/etc/default/opendkim'
     - src: opendkim/trusted-hosts
-      dest: '{{mail_opendkim_dir_config}}/trusted-hosts'
+      dest: '{{ mail_opendkim_dir_config }}/trusted-hosts'
     - src: opendkim/key-table
-      dest: '{{mail_opendkim_dir_config}}/key-table'
+      dest: '{{ mail_opendkim_dir_config }}/key-table'
     - src: opendkim/signing-table
-      dest: '{{mail_opendkim_dir_config}}/signing-table'
+      dest: '{{ mail_opendkim_dir_config }}/signing-table'
   notify:
     - restart opendkim
     - restart postfix
 
 - name: Generate opendkim keys
   include_tasks: ./dkim-key.yml
-  with_items: '{{organizations}}'
+  with_items: '{{ organizations }}'
   loop_control:
     loop_var: organization
